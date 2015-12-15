@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
-const apiSecret = 'API_SECRET';
+const notificationSecret = process.env.NOTIFICATION_SECRET || 'NOTIFICATION_SECRET';
+const notificationKey = process.env.NOTIFICATION_KEY || 'NOTIFICATION_KEY'
 const EVENTS = {
     newNotification: 'NEW_NOTIFICATION'
 };
@@ -20,7 +21,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.post("/send", (req, res) => {
     var data = req.body;
-    if (!req.headers || req.headers.apisecret !== apiSecret) {
+    if (!req.headers || req.headers.apisecret !== notificationSecret) {
         return res.status(401).json('invalid api secret');
     }
 
@@ -32,5 +33,10 @@ app.post("/send", (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    socket.on("join", (channel) => socket.join(channel));
+    socket.on("join", (auth) => {
+        if (!auth || !auth.channel || auth.notificationKey !== notificationKey) {
+            return;
+        }
+        socket.join(auth.channel)
+    });
 });

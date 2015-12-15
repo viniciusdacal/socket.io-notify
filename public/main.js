@@ -5,5 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     console.log(notification);
   });
 
-  socket.emit('join', 'SOME_CHANNEL');
+  socket.emit('join', {
+    channel: 'SOME_CHANNEL',
+    notificationKey: 'NOTIFICATION_KEY'
+  });
 });
