@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(__dirname + '/public'));
 
 app.post("/send", (req, res) => {
-    var data = req.body;
+    const data = req.body;
     if (!req.headers || req.headers.apisecret !== notificationSecret) {
         return res.status(401).json('invalid api secret');
     }
@@ -33,10 +33,20 @@ app.post("/send", (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    socket.on("join", (auth) => {
-        if (!auth || !auth.channel || auth.notificationKey !== notificationKey) {
-            return;
-        }
-        socket.join(auth.channel)
+
+    if(!validateConnection(socket.handshake.query)) {
+        return;
+    }
+
+    socket.on("join", (channel) => {
+        socket.join(channel);
     });
 });
+
+
+function validateConnection(query) {
+    if (query.notificationKey !== notificationKey) {
+        return;
+    }
+    return true;
+}
