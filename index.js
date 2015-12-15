@@ -20,7 +20,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.post("/send", (req, res) => {
     var data = req.body;
-    console.log(req.headers);
     if (!req.headers || req.headers.apisecret !== apiSecret) {
         return res.status(401).json('invalid api secret');
     }
