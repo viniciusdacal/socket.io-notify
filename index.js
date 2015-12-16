@@ -21,7 +21,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.post("/send", (req, res) => {
     const data = req.body;
-    if (!req.headers || req.headers.apisecret !== notificationSecret) {
+    if (!req.headers || req.headers.notification_secret !== notificationSecret) {
         return res.status(401).json('invalid api secret');
     }
 
