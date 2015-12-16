@@ -14,7 +14,7 @@ $ node .
 ##Sending notifications
 
 ```bash
-$ curl --request POST 'http://localhost:3000/send' --header apisecret:NOTIFICATION_SECRET --data 'notification=notificationexample&channel=SOME_CHANNEL'
+$ curl --request POST 'http://localhost:3000/send' --header notification_secret:NOTIFICATION_SECRET --data 'notification=notificationexample&channel=SOME_CHANNEL'
 ```
 
 Client side
