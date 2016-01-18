@@ -21,15 +21,27 @@ app.use(express.static(__dirname + '/public'));
 
 app.post("/send", (req, res) => {
     const data = req.body;
+    const dispath = (channel, notification) => {
+        io.to(channel).emit(EVENTS.newNotification, data.notification);
+    };
+
     if (!req.headers || req.headers.notification_secret !== notificationSecret) {
         return res.status(401).json('invalid notification secret');
     }
 
     if (data && data.notification && data.channel) {
-        io.to(data.channel).emit(EVENTS.newNotification, data.notification);
+        if (data.channel.forEach) {
+            data.channel.forEach(function (channel) {
+                dispath(channel, data.notification);
+            });
+        } else {
+            dispath(data.channel, data.notification);
+        }
+
         return res.status(200).json('ok');
     }
     return res.status(406).json('Missing parameters');
+
 });
 
 io.on('connection', (socket) => {
