@@ -1,14 +1,29 @@
+var fs = require('fs');
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 const notificationSecret = process.env.NOTIFICATION_SECRET || 'NOTIFICATION_SECRET';
 const notificationKey = process.env.NOTIFICATION_KEY || 'NOTIFICATION_KEY'
 const EVENTS = {
     newNotification: 'NEW_NOTIFICATION'
 };
+var server;
+
+if(process.env.SSL_KEY && process.env.SSL_CERT) {
+    var options = {
+      key: fs.readFileSync(process.env.SSL_KEY),
+      cert: fs.readFileSync(process.env.SSL_CERT)
+    };
+    server = require('https').createServer(options, app);
+} else {
+    server = require('http').createServer(app);
+}
+
+
+const io = require('socket.io')(server);
+
 
 server.listen(port, () => console.log('Server listening at port %d', port));
 
