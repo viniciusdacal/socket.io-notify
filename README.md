@@ -17,7 +17,7 @@ $ node .
 $ curl --request POST 'http://localhost:3000/send' --header notification_secret:NOTIFICATION_SECRET --data 'notification=notificationexample&channel=SOME_CHANNEL'
 ```
 
-Client side
+### Client side - Javascript
 
 ```javascript
 
@@ -32,4 +32,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
   socket.emit('join', 'SOME_CHANNEL');
 });
 
+```
+
+### Client side - PHP
+
+```php
+
+<?php
+
+use Guzzle\Http\Client;
+
+
+$socketio_host = getenv('SOCKETIO_HOST');
+$socketio_port = getenv('SOCKETIO_PORT');
+$secret = getenv('NOTIFICATION_SECRET');
+$channel = 'some_channel';
+$client = new Client;
+$request = $client->post($socketio_host.':'.$socketio_port. '/send', [], [
+    'notification[description]' => $text,
+    'channel' => $channel
+]);
+$request->setHeader('notification_secret', $secret);
+$response = $request->send();
 ```
