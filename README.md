@@ -1,5 +1,6 @@
 
 # Socket.IO Notify
+>node >=4.1.1
 
 A simple notification dispatcher written in nodeJS using socket.io
 
