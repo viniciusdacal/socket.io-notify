@@ -12,11 +12,6 @@ $ npm install
 $ node .
 
 ```
-##Sending notifications
-
-```bash
-$ curl --request POST 'http://localhost:3000/send' --header notification_secret:NOTIFICATION_SECRET --data 'notification=notificationexample&channel=SOME_CHANNEL'
-```
 
 ### Client side - Javascript
 
@@ -34,8 +29,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 ```
+##Sending notifications
 
-### Client side - PHP
+### bash
+```bash
+$ curl --request POST 'http://localhost:3000/send' --header notification_secret:NOTIFICATION_SECRET --data 'notification=notificationexample&channel=SOME_CHANNEL'
+```
+### Server side - PHP
 
 ```php
 
