@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Vinicius Dacal",
   "private": false,
+  "scripts": {
+    "start": "node ."
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "3.4.8",
