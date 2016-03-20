@@ -9,8 +9,24 @@ A simple notification dispatcher written in nodeJS using socket.io
 ```bash
 $ cd socket.io-notify
 $ npm install
-$ node .
+$ npm start
 
+```
+
+##Configuration
+all the configuration can be passed by env variables.
+```js
+PORT //port to run the dispatcher, default is '3000';
+NOTIFICATION_KEY //notification key, that your client will configure to connect in a channel, default is NOTIFICATION_KEY
+NOTIFICATION_SECRET //notification secret, your server will use to dispatch notifications, default is NOTIFICATION_SECRET
+```
+
+##SSL(HTTPS)
+
+for ssl configuration you only need to set those two env variables
+```bash
+SSL_KEY="sslkey"
+SSL_CERT="path/to/certified"
 ```
 
 ### Client side - Javascript
