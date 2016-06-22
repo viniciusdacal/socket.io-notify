@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static(__dirname + '/public'));
 
-app.post("/send", (req, res) => {
+app.post('/send', (req, res) => {
     const data = req.body;
     const dispath = (channel, notification) => {
         io.to(channel).emit(EVENTS.newNotification, data.notification);
@@ -65,8 +65,12 @@ io.on('connection', (socket) => {
         return;
     }
 
-    socket.on("join", (channel) => {
+    socket.on('join', (channel) => {
         socket.join(channel);
+    });
+
+    socket.on('leave', (channel) => {
+        socket.leave(channel);
     });
 });
 

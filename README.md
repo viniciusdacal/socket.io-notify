@@ -41,7 +41,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     console.log(notification);
   });
 
+  //to join a channel
   socket.emit('join', 'SOME_CHANNEL');
+
+  //to leave a channel
+  socket.emit('leave', 'SOME_CHANNEL');
 });
 
 ```
